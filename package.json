@@ -1,0 +1,9 @@
+{
+  "name": "peerdeps-manager",
+  "version": "0.0.0-alpha",
+  "main": "src/index.js",
+  "license": "MIT",
+  "files": [
+    "/src"
+  ]
+}
