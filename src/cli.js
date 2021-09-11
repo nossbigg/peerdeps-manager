@@ -1,2 +1,3 @@
 #!/usr/bin/env node
-console.log("helloworld");
+const { entrypoint } = require("./entrypoint");
+entrypoint();
