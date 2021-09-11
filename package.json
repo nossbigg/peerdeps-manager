@@ -2,6 +2,12 @@
   "name": "peerdeps-manager",
   "version": "0.0.0-alpha",
   "main": "src/index.js",
+  "scripts": {
+    "pdm": "node ./src/cli.js"
+  },
+  "bin": {
+    "peerdeps-manager": "./src/cli.js"
+  },
   "license": "MIT",
   "files": [
     "/src"
