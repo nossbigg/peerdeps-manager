@@ -1,7 +1,7 @@
 const { emitCliCommand } = require("../../utils");
 
 const execYarnAdd = async (packages) => {
-  await emitCliCommand("yarn", ["add", ...packages]);
+  await emitCliCommand("yarn", ["add", "--dev", ...packages]);
 };
 
 const execYarnRemove = async (packages) => {
