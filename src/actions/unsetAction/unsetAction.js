@@ -5,6 +5,7 @@ const {
   execYarnRemove,
   getPackageManagerKey,
 } = require("../packageManagerUtils");
+const { getDevDependenciesState } = require("./getDevDependenciesState");
 
 const handlerMap = { npm: execNpmUninstall, yarn: execYarnRemove };
 
@@ -18,9 +19,16 @@ const doUnsetAction = async () => {
     return;
   }
 
+  const { presentPackages } = getDevDependenciesState(packageList);
+  const isNoPackagesToUninstall = presentPackages.length === 0;
+  if (isNoPackagesToUninstall) {
+    console.log("no packages to uninstall. nothing to do.");
+    return;
+  }
+
   const packageManagerKey = getPackageManagerKey();
   const uninstallHandler = handlerMap[packageManagerKey];
-  await uninstallHandler(packageList);
+  await uninstallHandler(presentPackages);
 };
 
 exports.doUnsetAction = doUnsetAction;
