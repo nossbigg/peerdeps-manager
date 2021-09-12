@@ -1,6 +1,12 @@
 const get = require("lodash.get");
 const { loadPeerdepsManagerConfig } = require("../common");
-const { execNpmInstall } = require("../packageManagerUtils");
+const {
+  execNpmInstall,
+  execYarnAdd,
+  getPackageManagerKey,
+} = require("../packageManagerUtils");
+
+const handlerMap = { npm: execNpmInstall, yarn: execYarnAdd };
 
 const doSetAction = async () => {
   const pdmConfig = loadPeerdepsManagerConfig();
@@ -12,7 +18,9 @@ const doSetAction = async () => {
     return;
   }
 
-  await execNpmInstall(packageList);
+  const packageManagerKey = getPackageManagerKey();
+  const installHandler = handlerMap[packageManagerKey];
+  await installHandler(packageList);
 };
 
 exports.doSetAction = doSetAction;

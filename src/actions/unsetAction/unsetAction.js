@@ -1,6 +1,12 @@
 const get = require("lodash.get");
 const { loadPeerdepsManagerConfig } = require("../common");
-const { execNpmUninstall } = require("../packageManagerUtils");
+const {
+  execNpmUninstall,
+  execYarnRemove,
+  getPackageManagerKey,
+} = require("../packageManagerUtils");
+
+const handlerMap = { npm: execNpmUninstall, yarn: execYarnRemove };
 
 const doUnsetAction = async () => {
   const pdmConfig = loadPeerdepsManagerConfig();
@@ -12,7 +18,9 @@ const doUnsetAction = async () => {
     return;
   }
 
-  await execNpmUninstall(packageList);
+  const packageManagerKey = getPackageManagerKey();
+  const uninstallHandler = handlerMap[packageManagerKey];
+  await uninstallHandler(packageList);
 };
 
 exports.doUnsetAction = doUnsetAction;
