@@ -3,7 +3,7 @@ const { doUnsetAction } = require("../actions/unsetAction");
 
 const actionMapper = { set: doSetAction, unset: doUnsetAction };
 
-const entrypoint = () => {
+const entrypoint = async () => {
   const [, , action] = process.argv;
 
   const handler = actionMapper[action];
@@ -12,7 +12,7 @@ const entrypoint = () => {
     process.exit(1);
   }
 
-  handler();
+  await handler();
 };
 
 exports.entrypoint = entrypoint;
