@@ -88,3 +88,4 @@ As a `react` component library maintainer, I would like to:
 1. Use `peerdeps-manager` in a project:
    - (in other project directory) `npm install -D peerdeps-manager`
    - (in other project directory) `npm link peerdeps-manager`
+1. Publish package: `npm publish --access public`
