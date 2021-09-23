@@ -8,7 +8,7 @@
     "peerdependencies",
     "devdependencies"
   ],
-  "version": "0.0.0-alpha",
+  "version": "0.0.0-alpha2",
   "main": "src/index.js",
   "scripts": {
     "start": "node ./src/cli.js"
