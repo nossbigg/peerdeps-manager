@@ -6,6 +6,7 @@ const {
   getPackageManagerKey,
 } = require("../packageManagerUtils");
 const { getDevDependenciesState } = require("./getDevDependenciesState");
+const { doGitRestorePackageJson } = require("./doGitRestorePackageJson");
 
 const handlerMap = { npm: execNpmUninstall, yarn: execYarnRemove };
 
@@ -29,6 +30,15 @@ const doUnsetAction = async () => {
   const packageManagerKey = getPackageManagerKey();
   const uninstallHandler = handlerMap[packageManagerKey];
   await uninstallHandler(presentPackages);
+
+  const isDoGitRestorePackageJson = get(
+    pdmConfig,
+    "unset.doGitRestorePackageJson",
+    true
+  );
+  if (isDoGitRestorePackageJson) {
+    await doGitRestorePackageJson();
+  }
 };
 
 exports.doUnsetAction = doUnsetAction;

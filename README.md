@@ -52,11 +52,23 @@ const config = {
   // where you define your packages to install/uninstall during set/unset actions
   // format: same as per provided to npm install/uninstall or yarn add/remove to maximize compatibility
   set: { packages: ["lodash.uniq", "lodash.template@4.0.6"] },
-  unset: { packages: ["lodash.uniq", "lodash.template"] },
+  unset: {
+    packages: ["lodash.uniq", "lodash.template"],
+    // automatically restores package.json to last git checked-in state, requires 'git' in CLI
+    // set to 'false' to disable this feature
+    doGitRestorePackageJson: true,
+  },
 };
 
 module.exports = config;
 ```
+
+**Note on** `unset.doGitRestorePackageJson`:
+
+- [`npm uninstall`](https://docs.npmjs.com/cli/v7/commands/npm-uninstall)/[`yarn remove`](https://classic.yarnpkg.com/en/docs/cli/remove/) will remove a given package from all `dependencies` fields, including `peerDependencies`
+- However, after an `unset`, a library package author would like to preserve `peerDependencies`, in order to indicate what peer dependencies a given library must have in order to work correctly
+- Thus, for an ideal developer experience, during the `unset` step, `peerdeps-manager` will do a `git checkout package.json` **by default** in order to restore the `peerDependencies` that were lost due to uninstalling the temporary packages.
+- You can disable this feature by setting `doGitRestorePackageJson: false` (eg. if you are experimenting with your `package.json` and you do not want to lose your changes)
 
 _Related documentation:_
 
